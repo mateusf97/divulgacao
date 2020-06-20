@@ -83,7 +83,7 @@
 
   <script type="text/javascript">
 
-    var api_url = 'http://localhost:8889';
+    var api_url = 'http://192.168.1.6/public/index.php';
 
     function atualizaBovespa() {
 
@@ -124,7 +124,7 @@
         var porcText = ($(data.html.chart_info).find("#chart-info-change-percent").text());
         porcentagem = parseFloat(porcText.replace(",",".")).toFixed(2);
 
-        $("#percentDOW").html((((porcentagem>0)?"+"+porcentagem:porcentagem)+'%')).removeClass("up").removeClass("down").addClass((porcentagem>0?"up":"down"));
+        $("#percentDOW").html((((porcentagem>=0)?"+"+porcentagem:porcentagem)+'%')).removeClass("up").removeClass("down").addClass((porcentagem>=0?"up":"down"));
         $("#pointsDOW").html(data.attr.last_value + "pts");
 
         setTimeout(function(){ atualizaDowJones() }, 15000);
@@ -148,7 +148,7 @@
         var porcText = ($(data.html.chart_info).find("#chart-info-change-percent").text());
         porcentagem = parseFloat(porcText.replace(",",".")).toFixed(2);
 
-        $("#percentSP500").html((((porcentagem>0)?"+"+porcentagem:porcentagem)+'%')).removeClass("up").removeClass("down").addClass((porcentagem>0?"up":"down"));
+        $("#percentSP500").html((((porcentagem>=0)?"+"+porcentagem:porcentagem)+'%')).removeClass("up").removeClass("down").addClass((porcentagem>=0?"up":"down"));
         $("#pointsSP500").html(data.attr.last_value + "pts")
         setTimeout(function(){ atualizaSP500() }, 15000);
 
@@ -171,7 +171,7 @@
         var porcText = ($(data.html.chart_info).find("#chart-info-change-percent").text());
         porcentagem = parseFloat(porcText.replace(",",".")).toFixed(2);
 
-        $("#percentBitcoin").html((((porcentagem>0)?"+"+porcentagem:porcentagem)+'%')).removeClass("up").removeClass("down").addClass((porcentagem>0?"up":"down"));
+        $("#percentBitcoin").html((((porcentagem>=0)?"+"+porcentagem:porcentagem)+'%')).removeClass("up").removeClass("down").addClass((porcentagem>=0?"up":"down"));
         $("#pointsBitcoin").html("R$ " + parseFloat(data.attr.last_value).toFixed(2));
         setTimeout(function(){ atualizaBitcoin() }, 15000);
 
@@ -193,7 +193,7 @@
         var porcText = ($(data.html.chart_info).find("#chart-info-change-percent").text());
         porcentagem = parseFloat(porcText.replace(",",".")).toFixed(2);
 
-        $("#percentDolar").html((((porcentagem>0)?"+"+porcentagem:porcentagem)+'%')).removeClass("up").removeClass("down").addClass((porcentagem>0?"up":"down"));
+        $("#percentDolar").html((((porcentagem>=0)?"+"+porcentagem:porcentagem)+'%')).removeClass("up").removeClass("down").addClass((porcentagem>=0?"up":"down"));
         $("#pointsDolar").html("R$ " + parseFloat(data.attr.last_value).toFixed(2));
         setTimeout(function(){ atualizaBitcoin() }, 15000);
 
@@ -216,7 +216,7 @@
         var porcText = ($(data.html.chart_info).find("#chart-info-change-percent").text());
         porcentagem = parseFloat(porcText.replace(",",".")).toFixed(2);
 
-        $("#percentEuro").html((((porcentagem>0)?"+"+porcentagem:porcentagem)+'%')).removeClass("up").removeClass("down").addClass((porcentagem>0?"up":"down"));
+        $("#percentEuro").html((((porcentagem>=0)?"+"+porcentagem:porcentagem)+'%')).removeClass("up").removeClass("down").addClass((porcentagem>=0?"up":"down"));
         $("#pointsEuro").html("R$ " + parseFloat(data.attr.last_value).toFixed(2));
         setTimeout(function(){ atualizaEuro() }, 15000);
 
