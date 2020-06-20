@@ -1,0 +1,63 @@
+:root {
+  --main-color-dark: #c7c6bb;
+  --main-color: #ffffff;
+  --secondary-color: #c7c6bb;
+  --background-color: linear-gradient( to left top,#28b86f 8%,#acacac 60%,#64da9e 98%),  linear-gradient(rgba(0, 0, 0, 1), rgba(0, 0, 0, 1))
+}
+
+@font-face {
+  font-family: Inconsolata;
+  src: url("Inconsolata-r.ttf");
+}
+
+
+@font-face {
+  font-family: Inconsolata;
+  src: url("Inconsolata-b.ttf");
+  font-weight: bold;
+}
+
+@font-face {
+  font-family: Inconsolata;
+  src: url("Inconsolata-m.ttf");
+  font-weight: 500;
+}
+
+
+html, body {
+  height: 100%;
+  font-family: "Inconsolata";
+}
+
+
+.header {
+  height: 120px;
+  background: var(--background-color);
+}
+
+.body {
+  min-height: calc(100% - 240px);
+}
+
+.footer {
+  height: 120px;
+  background: var(--background-color);
+}
+
+.text-center {
+  text-align: center;
+}
+
+
+.text-right {
+  text-align: right;
+}
+
+
+.text-left {
+  text-align: left;
+}
+
+.bottom-space {
+  padding-bottom: 20px;
+}
