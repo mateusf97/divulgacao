@@ -51,28 +51,12 @@ class User {
     $Utils = new Utils($this->db);
     $Error = new Error();
 
-    if (!isset($params['email'])) {
-      return array('status' => 400, 'response' => $Error->getMessage('MISSING_EMAIL'));
-    }
-
-    if (!isset($params['name'])) {
-      return array('status' => 400, 'response' => $Error->getMessage('MISSING_NAME'));
-    }
-
     if (!isset($params['password'])) {
       return array('status' => 400, 'response' => $Error->getMessage('MISSING_PASSWORD'));
     }
 
     if (!isset($params['cpf'])) {
       return array('status' => 400, 'response' => $Error->getMessage('MISSING_CPF'));
-    }
-
-    if (!strrpos(trim($params['name']), ' ')) {
-      return array('status' => 400, 'response' => $Error->getMessage('INVALID_NAME'));
-    }
-
-    if (!filter_var($params['email'], FILTER_VALIDATE_EMAIL)) {
-      return array('status' => 400, 'response' => $Error->getMessage('INVALID_EMAIL'));
     }
 
     $Utils->extractNumbers($params['cpf']);
@@ -95,23 +79,14 @@ class User {
       return array('status' => 403, 'response' => $Error->getMessage('CPF_ALREADY_EXISTS'));
     }
 
-    $user_email = $this->db->prepare("SELECT email FROM user WHERE email = ?");
-    $user_email->execute([$params['email']]);
-    $user_email = $user_email->fetchAll();
-
-    if ($user_email) {
-      return array('status' => 403, 'response' => $Error->getMessage('EMAIL_ALREADY_EXISTS'));
-    }
-
     $access_token = md5(uniqid($cpf, true));
 
     $params['password'] =  password_hash($params['password'], PASSWORD_DEFAULT);
 
-    $sql = $this->db->prepare('INSERT INTO user SET cpf = ?, email = ?, access_token = ?, password = ?');
+    $sql = $this->db->prepare('INSERT INTO user SET cpf = ?, access_token = ?, password = ?');
 
     $sql->execute([
       $params['cpf'],
-      $params['email'],
       $access_token,
       $params['password']
     ]);
@@ -169,27 +144,31 @@ class User {
 
     $Validator = new Validator($this->db);
     $Error = new Error();
+    $Utils = new Utils($this->db);
 
     if (!isset($params['login'])) {
       return array('status' => 400, 'response' => $Error->getMessage('MISSING_LOGIN'));
     }
 
-    if (!isset($params['password'])) {
-      return array('status' => 400, 'response' => $Error->getMessage('MISSING_PASSWORD'));
+    $Utils->extractNumbers($params['login']);
+    $cpf = $params['login'];
+
+    if (!$Validator->validateCpf($cpf)) {
+      return array('status' => 400, 'response' => $Error->getMessage('INVALID_CPF'));
     }
 
-    if (!filter_var($params['login'], FILTER_VALIDATE_EMAIL)) {
-      return array('status' => 400, 'response' => $Error->getMessage('INVALID_LOGIN'));
+    if (!isset($params['password']) || empty($params['password'])) {
+      return array('status' => 400, 'response' => $Error->getMessage('MISSING_PASSWORD'));
     }
 
     $password = password_hash($params['password'], PASSWORD_DEFAULT);
 
-    $user = $this->db->prepare("SELECT access_token, password FROM user WHERE email = '" . $params['login'] . "'");
+    $user = $this->db->prepare("SELECT access_token, password FROM user WHERE cpf = '" . $params['login'] . "'");
     $user->execute();
     $user = $user->fetch();
 
     if ($user && password_verify($params['password'], $user['password'])) {
-      $logged = $this->db->prepare("SELECT access_token FROM user WHERE email = '" . $params['login'] . "'");
+      $logged = $this->db->prepare("SELECT access_token FROM user WHERE cpf = '" . $params['login'] . "'");
       $logged->execute();
       $logged = $logged->fetch();
 

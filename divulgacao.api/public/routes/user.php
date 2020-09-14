@@ -12,9 +12,8 @@ use \Authentication\Authentication;
 *
 **/
 
-$app->post('/user_login', function ($request, $response, array $args) {
+$app->post('/login', function ($request, $response, array $args) {
   $params = $request->getParsedBody();
-
 
   $User = new User($this->db);
   $Output = new Output();
@@ -37,6 +36,7 @@ $app->post('/user_login', function ($request, $response, array $args) {
 
 
 $app->post('/users', function ($request, $response, array $args) {
+
   $params = $request->getParsedBody();
 
   $User = new User($this->db);

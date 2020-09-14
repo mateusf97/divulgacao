@@ -1,5 +1,0 @@
-### Composer ###
-composer.phar
-vendor/
-src/logs
-composer.lock

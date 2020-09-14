@@ -5,10 +5,10 @@ $config['displayErrorDetails'] = true;
 $config['debug']               = true;
 
   // DATABASE
-$config['db']['host']   = '127.0.0.1';
-$config['db']['user']   = 'root';
-$config['db']['pass']   = '123123';
-$config['db']['dbname'] = 'showcase';
+$config['db']['host']   = 'sql130.main-hosting.eu';
+$config['db']['user']   = 'u122580076_Sergios';
+$config['db']['pass']   = 'Header(***Access-Control-All222';
+$config['db']['dbname'] = 'u122580076_Sergios';
 
 $app = new \Slim\App(['settings' => $config]);
 
