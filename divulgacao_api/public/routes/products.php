@@ -13,6 +13,24 @@ use Slim\Http\UploadedFile;
 *
 **/
 
+$app->get('/product/{id}', function ($request, $response, array $args) {
+
+  $Products = new Products($this->db);
+  $Output = new Output();
+
+  $res = $Products->get($args['id']);
+
+  return $Output->response($response, $res['status'], $res['response']);
+});
+
+
+/**
+* user login
+*
+* @return json - User authenticated data
+*
+**/
+
 $app->get('/products', function ($request, $response, array $args) {
   $params = $request->getParsedBody();
 
@@ -87,6 +105,63 @@ $app->post('/products', function ($request, $response, array $args) {
   if ($res["status"] != 201) {
     unlink($params['image_url']);
   }
+
+  return $Output->response($response, $res['status'], $res['response']);
+});
+
+
+/**
+* user login
+*
+* @return json - User authenticated data
+*
+**/
+
+$app->post('/update_product/{id}', function ($request, $response, array $args) {
+
+  $Products = new Products($this->db);
+  $Output = new Output();
+
+  $params = $request->getParsedBody();
+
+  $Authentication = new Authentication($this->db, $request->getHeader('Authorization'));
+
+  if (!$Authentication->isValid()) {
+    return $Output->response($response, 403, 'NOT_ATHENTICATED');
+  }
+
+  $res = $Products->update($params, $args['id']);
+
+  if ($res["status"] != 201) {
+    unlink($params['image_url']);
+  }
+
+  return $Output->response($response, $res['status'], $res['response']);
+});
+
+
+
+/**
+* user login
+*
+* @return json - User authenticated data
+*
+**/
+
+$app->delete('/product', function ($request, $response, array $args) {
+
+  $Products = new Products($this->db);
+  $Output = new Output();
+
+  $Authentication = new Authentication($this->db, $request->getHeader('Authorization'));
+
+  if (!$Authentication->isValid()) {
+    return $Output->response($response, 403, 'NOT_ATHENTICATED');
+  }
+
+  $params = $request->getParsedBody();
+  $res = $Products->delete($params);
+
 
   return $Output->response($response, $res['status'], $res['response']);
 });

@@ -80,6 +80,94 @@ class Products {
 
 
   /**
+  * UPDATE a Products in database
+  *
+  * @param $params: (name, email, password, cpf)
+  * @param name must to have a space between two words: @example XXXX XXXXX
+  * @param password must be at least 8 characters: @example XXXXXXXX
+  *
+  * @return array(response, status code)
+  *
+  **/
+
+  public function update($params, $id) {
+    $Validator = new Validator($this->db);
+    $Utils = new Utils($this->db);
+    $Error = new Error();
+
+    $params['category_books'] = ($params['category_books'] == "false") ? true : false;
+    $params['category_courses'] = ($params['category_courses'] == "false") ? true : false;
+    $params['category_subscriptions'] = ($params['category_subscriptions'] == "false") ? true : false;
+    $params['category_free'] = ($params['category_free'] == "false") ? true : false;
+    $params['is_important'] = ($params['is_important'] == "false") ? true : false;
+
+    $sql = $this->db->prepare('SELECT image_url FROM `product` WHERE id = ?');
+    $sql->execute([$id]);
+    $image = $sql->fetch()['image_url'];
+
+    if ($image != $params['image_url']) {
+      unlink($image);
+    }
+
+    $sql = $this->db->prepare('UPDATE product SET
+      image_url = ?,
+      title = ?,
+      description = ?,
+      price = ?,
+      parcel = ?,
+      category_books = ?,
+      category_courses = ?,
+      category_subscriptions = ?,
+      category_free = ?,
+      is_important = ? WHERE id = ?
+    ');
+
+    $sql->execute([
+      $params['image_url'],
+      $params['title'],
+      $params['description'],
+      $params['price'],
+      $params['parcel'],
+      (int) $params['category_books'] == "true" ? 1 : 0,
+      (int) $params['category_courses'] == "true" ? 1 : 0,
+      (int) $params['category_subscriptions'] == "true" ? 1 : 0,
+      (int) $params['category_free'] == "true" ? 1 : 0,
+      (int) $params['is_important'] == "true" ? 1 : 0,
+      $id
+    ]);
+
+    return array('status' => 201, 'response' => $id);
+  }
+
+
+
+
+
+
+  /**
+  * change password for Products
+  *
+  * @param $new_password: String
+  * @return array(response, status code)
+  *
+  **/
+
+  public function get($id) {
+
+    $sql = $this->db->prepare('SELECT * FROM `product` WHERE id = ?');
+    $sql->execute([$id]);
+    $product = $sql->fetch();
+
+    return array('status' => 200, 'response' => $product);
+  }
+
+
+
+
+
+
+
+  /**
   * change password for Products
   *
   * @param $new_password: String
@@ -94,6 +182,28 @@ class Products {
     $products = $sql->fetchAll();
 
     return array('status' => 200, 'response' => $products);
+  }
+
+
+
+
+  /**
+  * Return login data
+  *
+  * @param $params: (login, password) or
+  * @var $params['login'] = cpf | email
+  * @var $params['password'] = Products authentication
+  *
+  * @return array(response, status code)
+  *
+  **/
+
+  public function delete($params) {
+
+    $Products = $this->db->prepare("DELETE FROM product WHERE id = '" . $params['id'] . "'");
+    $Products->execute();
+
+    return array('status' => 200, 'response' => $logged);
   }
 
 

@@ -223,7 +223,7 @@ a {
 
 @media screen and (max-width: 40em) {
   .hide-on-small {
-    display: none;
+    display: none !important;
   }
 
   .text-center-on-small {
@@ -369,7 +369,15 @@ button:active {
 
 .action-button {
   background: gray;
+  padding: 10px;
+  border: 1px solid black;
+  border-radius: 5px;
+  color: white;
+  margin: 0px 2px;
+}
 
+.action-button:hover {
+  background: rgba(0,0,0,0.2)
 }
 
 .item-pic {
@@ -383,10 +391,10 @@ button:active {
 }
 
 .product-item {
-
+  padding: 10px 0px;
   border-bottom: 1px solid gray;
 
 }
 .product-item:hover {
-  background: rgba(0, 0, 0, 0.02)
+  background: rgba(0, 0, 0, 0.02);
 }

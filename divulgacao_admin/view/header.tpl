@@ -17,7 +17,7 @@
   <div class="header">
     <div class="row text-center">
       <div class="columns medium-12 small-12 header-image">
-        <a href="?page=home"><img src="images/logo.svg"></a>
+        <a href="?page=home&hash=<?=$hash;?>"><img src="images/logo.svg"></a>
       </div>
     </div>
   </div>
