@@ -27,6 +27,18 @@
     <div class="columns small-12"></div>
 
     <div class="columns small-12 medium-3 text-right text-center-on-small small-top-space">
+      Url do anúncio (Seu URL personalizado):
+    </div>
+
+    <div class="columns small-12 medium-9 small-top-space">
+      <div class="text-left input-container">
+        <input type="text" required="required" class="admin-input" id="url" name="url">
+      </div>
+    </div>
+
+    <div class="columns small-12"></div>
+
+    <div class="columns small-12 medium-3 text-right text-center-on-small small-top-space">
       Título do Item:
     </div>
 
@@ -165,6 +177,7 @@
         $("#parcel").val(product['parcel']);
         $("#price").val(product['price']);
         $("#title").val(product['title']);
+        $("#url").val(product['url']);
 
         $("#image_url").attr("src", product['image_url']);
 

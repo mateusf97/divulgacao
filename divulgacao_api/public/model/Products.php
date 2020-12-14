@@ -43,6 +43,7 @@ class Products {
 
     $sql = $this->db->prepare('INSERT INTO product SET
       image_url = ?,
+      url = ?,
       title = ?,
       description = ?,
       price = ?,
@@ -111,6 +112,7 @@ class Products {
 
     $sql = $this->db->prepare('UPDATE product SET
       image_url = ?,
+      url = ?,
       title = ?,
       description = ?,
       price = ?,
@@ -124,6 +126,7 @@ class Products {
 
     $sql->execute([
       $params['image_url'],
+      $params['url'],
       $params['title'],
       $params['description'],
       $params['price'],
