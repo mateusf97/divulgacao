@@ -80,10 +80,10 @@
 
           $("#products").append($row);
         }
-      }, error: function(){
+    }, error: function(){
 
-      }
-    });
+    }
+  });
 
 
 
