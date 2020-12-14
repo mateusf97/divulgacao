@@ -43,8 +43,7 @@ $container['db'] = function ($c) {
   return $pdo;
 };
 
-$container['upload_directory'] = __DIR__ . '../app/images/';
-
+$container['upload_directory'] = __DIR__ . '/app/images/';
 
 
 /**

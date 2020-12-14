@@ -57,6 +57,7 @@ class Products {
 
     $sql->execute([
       $params['image_url'],
+      $params['url'],
       $params['title'],
       $params['description'],
       $params['price'],
@@ -206,7 +207,7 @@ class Products {
     $Products = $this->db->prepare("DELETE FROM product WHERE id = '" . $params['id'] . "'");
     $Products->execute();
 
-    return array('status' => 200, 'response' => $logged);
+    return array('status' => 200, 'response' => true);
   }
 
 
